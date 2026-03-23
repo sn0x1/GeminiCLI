@@ -1,0 +1,55 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  # 1. Джоба Лінтера (перевірка якості коду)
+  linter:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install HTML Linter
+        run: npm install -g htmlhint
+
+      - name: Run Linter
+        # Перевіряє наш index.html на наявність синтаксичних помилок
+        run: htmlhint index.html
+
+  # 2. Джоба збірки та відправки Docker image
+  build-and-push:
+    needs: linter # Запускається тільки якщо лінтер пройшов успішно
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write # Дозвіл на запис у GitHub Registry
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }} # Токен генерується автоматично
+
+      - name: Convert repository name to lowercase
+        run: echo "REPO=${GITHUB_REPOSITORY,,}" >> ${GITHUB_ENV}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          # Тег виглядатиме як ghcr.io/твій-логін/твоє-репо:latest
+          tags: ghcr.io/${{ env.REPO }}:latest
