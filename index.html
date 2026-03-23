@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etherium | Cloud & DevOps Architect Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0B0E14;
+            --accent-primary: #8B5CF6; /* Electric Violet */
+            --accent-secondary: #06B6D4; /* Cyan Neon */
+            --text-main: #E2E8F0;
+            --text-dim: #94A3B8;
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --font-main: 'Inter', sans-serif;
+            --font-mono: 'Fira Code', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- Background Decoration --- */
+        .blob {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            filter: blur(120px);
+            opacity: 0.15;
+            z-index: -1;
+            border-radius: 50%;
+            animation: move 20s infinite alternate linear;
+        }
+
+        @keyframes move {
+            from { transform: translate(-10%, -10%); }
+            to { transform: translate(60%, 40%); }
+        }
+
+        /* --- Layout --- */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        section {
+            padding: 8rem 0;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Components --- */
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-5px);
+        }
+
+        /* --- Hero --- */
+        .hero-title {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 800;
+            background: linear-gradient(to right, #fff, var(--accent-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--text-dim);
+            max-width: 600px;
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: opacity 0.3s ease;
+        }
+
+        .cta-button:hover {
+            opacity: 0.9;
+        }
+
+        /* --- Terminal Style --- */
+        .terminal {
+            font-family: var(--font-mono);
+            background: #05070A;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        .terminal-header {
+            background: #1A1F26;
+            padding: 0.75rem 1rem;
+            display: flex;
+            gap: 8px;
+        }
+
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .red { background: #FF5F56; }
+        .yellow { background: #FFBD2E; }
+        .green { background: #27C93F; }
+
+        .terminal-body {
+            padding: 1.5rem;
+            color: #A5B4FC;
+            font-size: 0.95rem;
+        }
+
+        .command { color: #22D3EE; }
+        .string { color: #A78BFA; }
+
+        /* --- Skills Grid --- */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .skill-tag {
+            display: inline-block;
+            background: rgba(139, 92, 246, 0.1);
+            color: var(--accent-primary);
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            margin: 0.3rem;
+            font-weight: 600;
+        }
+
+        /* --- Projects Grid --- */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-image {
+            width: 100%;
+            height: 200px;
+            background: #1e293b;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        /* --- Contact --- */
+        .contact-content {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        footer {
+            padding: 4rem 0;
+            text-align: center;
+            color: var(--text-dim);
+            border-top: 1px solid var(--glass-border);
+        }
+
+        /* --- Mobile Adjustments --- */
+        @media (max-width: 768px) {
+            .container { padding: 0 1.5rem; }
+            section { padding: 5rem 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="blob"></div>
+    
+    <div class="container">
+        <!-- HERO SECTION -->
+        <header id="hero">
+            <h1 class="hero-title">Architecting the <br>Future of Cloud</h1>
+            <p class="hero-subtitle">Senior Cloud & DevOps Engineer specializing in Kubernetes, AWS, and Scalable Infrastructure.</p>
+            <a href="#projects" class="cta-button">View My Work</a>
+        </header>
+
+        <!-- ABOUT SECTION -->
+        <section id="about">
+            <h2 style="font-size: 2.5rem; margin-bottom: 2rem;">01. System Status</h2>
+            <div class="terminal">
+                <div class="terminal-header">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                </div>
+                <div class="terminal-body">
+                    <p><span class="command">root@etherium:~#</span> whoami</p>
+                    <p style="margin-bottom: 1rem;">Architect, Problem Solver, Linux Enthusiast.</p>
+                    <p><span class="command">root@etherium:~#</span> cat bio.yaml</p>
+                    <pre style="color: #94A3B8;">
+<span class="string">name:</span> Alex Rivera
+<span class="string">expertise:</span> 
+  - Distributed Systems
+  - Cloud Native Architecture
+  - Continuous Delivery
+<span class="string">status:</span> Optimizing the world, one cluster at a time.
+<span class="string">location:</span> Remote / Global</pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- SKILLS SECTION -->
+        <section id="skills">
+            <h2 style="font-size: 2.5rem; margin-bottom: 2rem;">02. Tech Stack</h2>
+            <div class="skills-grid">
+                <div class="glass-card">
+                    <h3 style="margin-bottom: 1rem; color: var(--accent-secondary);">Infrastructure</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">AWS</span>
+                        <span class="skill-tag">GCP</span>
+                        <span class="skill-tag">Terraform</span>
+                        <span class="skill-tag">Ansible</span>
+                        <span class="skill-tag">CloudFormation</span>
+                    </div>
+                </div>
+                <div class="glass-card">
+                    <h3 style="margin-bottom: 1rem; color: var(--accent-primary);">Orchestration</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Kubernetes</span>
+                        <span class="skill-tag">Docker</span>
+                        <span class="skill-tag">Helm</span>
+                        <span class="skill-tag">Service Mesh</span>
+                        <span class="skill-tag">ArgoCD</span>
+                    </div>
+                </div>
+                <div class="glass-card">
+                    <h3 style="margin-bottom: 1rem; color: #F59E0B;">Observability</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Prometheus</span>
+                        <span class="skill-tag">Grafana</span>
+                        <span class="skill-tag">ELK Stack</span>
+                        <span class="skill-tag">Datadog</span>
+                        <span class="skill-tag">New Relic</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROJECTS SECTION -->
+        <section id="projects">
+            <h2 style="font-size: 2.5rem; margin-bottom: 2rem;">03. Featured Projects</h2>
+            <div class="projects-grid">
+                <div class="glass-card">
+                    <div class="project-image">⚓</div>
+                    <h3>Multi-Cloud K8s Mesh</h3>
+                    <p style="color: var(--text-dim); margin: 1rem 0;">Seamless service mesh integration across AWS and Azure using Istio and Terraform.</p>
+                    <a href="#" style="color: var(--accent-primary); text-decoration: none; font-weight: 600;">View Case Study &rarr;</a>
+                </div>
+                <div class="glass-card">
+                    <div class="project-image">⚡</div>
+                    <h3>Automated FinOps Tool</h3>
+                    <p style="color: var(--text-dim); margin: 1rem 0;">A custom Go-based agent that reduced cloud spend by 40% through intelligent right-sizing.</p>
+                    <a href="#" style="color: var(--accent-primary); text-decoration: none; font-weight: 600;">GitHub Repo &rarr;</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT SECTION -->
+        <section id="contact">
+            <div class="contact-content">
+                <h2 style="font-size: 3rem; margin-bottom: 1.5rem;">Let's Build Something</h2>
+                <p style="color: var(--text-dim); font-size: 1.2rem; margin-bottom: 3rem;">I'm always open to discussing high-scale infrastructure projects and cloud strategy.</p>
+                <a href="mailto:hello@etherium.dev" class="cta-button">Get In Touch</a>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 Etherium Architecture. Built with <span style="color: var(--accent-primary);">CSS Grid & Glassmorphism</span>.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Scroll Reveal Animation
+        const observerOptions = {
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Simple Parallax for Blobs
+        window.addEventListener('mousemove', (e) => {
+            const blob = document.querySelector('.blob');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            blob.style.transform = `translate(${x * 50}px, ${y * 50}px)`;
+        });
+    </script>
+</body>
+</html>
